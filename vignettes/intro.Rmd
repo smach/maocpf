@@ -1,0 +1,63 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(maocpf)
+```
+
+The goal of maocpf is to pull candidate fundraising data from the Massachusetts Office of Campaign and Political Finance.
+
+Here's a typical workflow.
+
+## Setup: Once or infrequently
+
+1) Get a list of all local candidates with `get_local_candidates()`. This function downloads a file with all candidates from the MA OCPF Web site to a temp subdirectory (which will be created if it doesn't exist). You can filter by city and/or office, but it's probably better to stick to the default and download the full list once. Then you can filter that unless you are 100% sure you only want the filtered version. The file downloads each time you run this function. 
+
+2) Get the IDs of the candidates you want with `get_candidate_id()` using the candidate name as the first argument and the data frame you created in step 1 as the second argument. _Store this data somewhere for re-use!_
+
+Here is a sample workflow to begin using this package:
+
+```{r eval=FALSE}
+
+all_candidate_info <- get_local_candidates()
+save(all_candidate_info, "data/all_candidate_info.Rdata")
+
+all_framingham_candidates <- dplyr::filter(all_candidate_info, Candidate_City == "Framingham")
+save(all_framingham_candidates, "data/all_framingham_candidates.Rdata")
+
+
+```
+
+Note that for state legislative districts that encompass areas outside of one community, you'll want to filter by District column instead. 
+
+Data for `all_candidate_info` and `all_framingham_candidates` from February 14, 2021 are included with this package.
+
+## Run regularly
+
+To get up-to-date data on a candidate, use the `get_candidate_contribution_data()` function with the candidate's ID. For example, I can find Framingham Mayor Spicer's ID with the get_candidate_id() function and all or part of her name:
+
+
+```{r,  message=FALSE, warning=FALSE}
+get_candidate_id("Spicer")
+```
+
+Now I can pull all the contributions since the start of 2021 with 
+
+```{r, eval=FALSE}
+spicer_contributions <- get_latest_candidate_contributions("16676", "2021-01-01")
+
+```
+

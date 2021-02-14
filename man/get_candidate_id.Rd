@@ -4,7 +4,7 @@
 \alias{get_candidate_id}
 \title{Get Candidate Campaign Committee MA OCPF ID}
 \usage{
-get_candidate_id(name, df, search_last_name_only = FALSE)
+get_candidate_id(name, df = all_candidate_info, search_last_name_only = FALSE)
 }
 \arguments{
 \item{name}{character string with candidate name or part of name}
