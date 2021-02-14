@@ -111,6 +111,6 @@ contributions2021 <- purrr::map_df(my_ids_df$ID, get_latest_candidate_contributi
 
 This package is not on CRAN, so you can only install it from GitHub.
 Install with your favorite install-from-GitHub package such as
-`remotes::install_github("smach/maocpf")`
+`remotes::install_github("smach/maocpf", build_vignettes = TRUE)`
 
 <!--  `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>. -->
