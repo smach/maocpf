@@ -11,6 +11,7 @@
 get_latest_candidate_contributions <- function(id, start_date = NULL) {
   url <- paste0("https://www.ocpf.us/ReportData/GetTextOutput?1=1&searchTypeCategory=A&filerCpfId=", id, "&sortField=Date&sortDirection=ASC")
   the_file <- paste0("temp/contributions_", id, "_", Sys.Date() )
+  if(!dir.exists("temp")) {dir.create("temp")}
   download.file(url, destfile = the_file )
   the_data <- data.table::fread(the_file, colClasses = c(`Zip Code` = "character"))
   if(!is.null(start_date)) {
