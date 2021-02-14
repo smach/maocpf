@@ -1,0 +1,90 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# maocpf
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of maocpf is to pull candidate fundraising data from the Massachusetts Office of Campaign and Political Finance.
+
+Here's a typical workflow.
+
+## Setup: Once or infrequently
+
+1) Get a list of all local candidates with `get_local_candidates()`. This function downloads a file with all candidates from the MA OCPF Web site to a temp subdirectory (which will be created if it doesn't exist). You can filter by city and/or office, but it's probably better to stick to the default and download the full list once. Then you can filter that unless you are 100% sure you only want the filtered version. The file downloads each time you run this function. 
+
+2) Get the IDs of the candidates you want with `get_candidate_id()` using the candidate name as the first argument and the data frame you created in step 1 as the second argument. _Store this data somewhere for re-use!_
+
+Here is a sample workflow to begin using this package:
+
+```{r eval=FALSE}
+library(maocpf)
+all_candidate_info <- get_local_candidates()
+save(all_candidate_info, "data/all_candidate_info.Rdata")
+
+all_framingham_candidates <- dplyr::filter(all_candidate_info, Candidate_City == "Framingham")
+save(all_framingham_candidates, "data/all_framingham_candidates.Rdata")
+
+
+```
+
+Note that for state legislative districts that encompass areas outside of one community, you'll want to filter by District column instead. 
+
+Data for `all_candidate_info` and `all_framingham_candidates` from February 14, 2021 are included with this package.
+
+## Run regularly
+
+To get up-to-date data on a candidate, use the `get_candidate_contribution_data()` function with the candidate's ID. For example, I can find Framingham Mayor Spicer's ID with the get_candidate_id() function and all or part of her name:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(maocpf)
+```
+
+
+```{r,  message=FALSE, warning=FALSE}
+get_candidate_id("Spicer")
+```
+
+Now I can pull all the contributions since the start of 2021 with 
+
+```{r, message=FALSE, warning=FALSE}
+spicer_contributions <- get_latest_candidate_contributions("16676", "2021-01-01")
+head(spicer_contributions)
+```
+
+To get a data frame with multiple candidates, simply use `purrr::map_df()` to get a list of candidate IDs and then download their contribution data, such as:
+
+```{r warning=FALSE, message=FALSE}
+my_ids_df <- purrr::map_df(c("Spicer", "King", "Steiner", "Stefanini"), get_candidate_id, df = all_framingham_candidates)
+my_ids_df
+
+```
+
+```{r eval=FALSE}
+
+contributions2021 <- purrr::map_df(my_ids_df$ID, get_latest_candidate_contributions, start_date = "2021-01-01")
+
+
+```
+
+
+## Installation
+
+This package is not on CRAN, so you can only install it from GitHub. Install with your favorite install-from-GitHub package such as `remotes::install_github("smach/maocpf")`
+
+
+<!--  `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>. -->
+
