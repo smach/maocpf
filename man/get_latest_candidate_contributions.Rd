@@ -9,7 +9,7 @@ get_latest_candidate_contributions(id, start_date = NULL)
 \arguments{
 \item{id}{character string with candidate MA OCPF ID}
 
-\item{start_date}{string in yyyy-mm-dd format or date object for contributions on or after a certain date, defaults to NULL}
+\item{start_date}{string in yyyy-mm-dd format or date object for contributions on or after a certain date, defaults to NULL (all candidate data downloads; this function filters it)}
 }
 \value{
 data frame with contribution information

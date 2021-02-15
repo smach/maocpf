@@ -3,7 +3,7 @@
 #' Get latest candidate contributions by candidate ID
 #'
 #' @param id character string with candidate MA OCPF ID
-#' @param start_date string in yyyy-mm-dd format or date object for contributions on or after a certain date, defaults to NULL
+#' @param start_date string in yyyy-mm-dd format or date object for contributions on or after a certain date, defaults to NULL (all candidate data downloads; this function filters it)
 #'
 #' @return data frame with contribution information
 #' @export
