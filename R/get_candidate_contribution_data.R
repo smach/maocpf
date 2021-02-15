@@ -34,5 +34,8 @@ get_latest_candidate_contributions <- function(id, start_date = NULL) {
                               Report = `Source Description`
                               )]
   data.table::setDF(the_data)
+  if(nrow(the_data) == 0){
+    the_data[nrow(the_data)+1,] <- NA
+  }
   return(the_data)
 }
