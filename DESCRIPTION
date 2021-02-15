@@ -1,11 +1,10 @@
 Package: maocpf
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Download campaign contribution data from the Massachusetts Office of Campaign and Political Finance by candidate ID
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Sharon Machlis
+Maintainer: Sharon Machlis <r4journos@machlis.com>
+Description: Get candidate IDs and then download campaign finance data
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
